@@ -9,7 +9,7 @@ class AdminCT extends Controller
     public function index(Request $request)
     {
         return view('admin/dashboard', [
-            'title' => 'R-Rapat | Dashboard'
+            'title' => 'Sirara | Dashboard'
         ]);
     }
 }
