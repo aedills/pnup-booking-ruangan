@@ -21,7 +21,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/detail/{uuid}', [RuangRapatCT::class, 'detail'])->name('detail');
             Route::post('/update', [RuangRapatCT::class, 'update'])->name('update');
             Route::post('/delete', [RuangRapatCT::class, 'delete'])->name('delete');
-            
+
             Route::post('/deleteFoto', [RuangRapatCT::class, 'deleteFoto'])->name('deleteFoto');
         });
     });
