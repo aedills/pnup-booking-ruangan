@@ -3,10 +3,11 @@
 use App\Http\Controllers\AdminCT;
 use App\Http\Controllers\DataGedung;
 use App\Http\Controllers\RuangRapatCT;
+use App\Http\Controllers\UserCT;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect('/admin');
+    return redirect('/u');
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -33,4 +34,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/update', [DataGedung::class, 'update'])->name('update');
         Route::post('/delete', [DataGedung::class, 'delete'])->name('delete');
     });
+});
+
+Route::prefix('/u')->name('user.')->group(function () {
+    Route::get('/', [UserCT::class, 'index'])->name('index');
+    Route::get('/list', [UserCT::class, 'list'])->name('list');
+    Route::get('/booking', [UserCT::class, 'booking'])->name('booking');
+    Route::get('/riwayat', [UserCT::class, 'riwayat'])->name('riwayat');
 });
