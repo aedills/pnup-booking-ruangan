@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminCT;
+use App\Http\Controllers\DataGedung;
 use App\Http\Controllers\RuangRapatCT;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/detail/{uuid}', [RuangRapatCT::class, 'detail'])->name('detail');
             Route::post('/update', [RuangRapatCT::class, 'update'])->name('update');
             Route::post('/delete', [RuangRapatCT::class, 'delete'])->name('delete');
+            
+            Route::post('/deleteFoto', [RuangRapatCT::class, 'deleteFoto'])->name('deleteFoto');
         });
+    });
+
+    Route::prefix('data-gedung')->name('gedung.')->group(function () {
+        Route::get('/', [DataGedung::class, 'index'])->name('index');
+        Route::get('/create', [DataGedung::class, 'create'])->name('create');
+        Route::post('/store', [DataGedung::class, 'store'])->name('store');
+        Route::post('/update', [DataGedung::class, 'update'])->name('update');
+        Route::post('/delete', [DataGedung::class, 'delete'])->name('delete');
     });
 });

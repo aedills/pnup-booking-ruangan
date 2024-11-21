@@ -49,9 +49,9 @@
                                 <div class="col-sm-10">
                                     <select class="form-select" name="gedung" id="gedung">
                                         <option value="" hidden>Pilih Gedung</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        @foreach($data_gedung as $gg)
+                                        <option value="{{$gg->id}}">{{$gg->gedung}} (Kampus {{$gg->kampus}})</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

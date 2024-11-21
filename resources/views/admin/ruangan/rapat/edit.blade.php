@@ -34,8 +34,10 @@
                             </a>
                         </div>
 
-                        <form action="{{route('admin.data-ruangan.rapat.store')}}" method="post" enctype="multipart/form-data" id="addForm">
+                        <form action="{{route('admin.data-ruangan.rapat.update')}}" method="post" enctype="multipart/form-data" id="addForm">
                             @csrf
+                            <input type="text" name="id" id="id" value="{{$ruang->id}}" hidden>
+                            <input type="text" name="uuid" id="uuid" value="{{$ruang->uuid}}" hidden>
                             <div class="row mb-3">
                                 <label for="ruang" class="col-sm-2 col-form-label">Nama Ruangan</label>
                                 <div class="col-sm-10">
@@ -55,9 +57,9 @@
                                 <div class="col-sm-10">
                                     <select class="form-select" name="gedung" id="gedung" required>
                                         <option value="" hidden>Pilih Gedung</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                        @foreach($data_gedung as $gg)
+                                        <option value="{{$gg->id}}" {{$gg->id == $ruang->id_gedung ? 'selected' : ''}}>{{$gg->gedung}} (Kampus {{$gg->kampus}})</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -167,10 +169,10 @@
                                 <div class="col-sm-10 offset-sm-2">
                                     <div class="row mt-2">
                                         @foreach($foto as $f)
-                                        <div class="col-sm-12 col-md-4 col-lg-2 mb-3 p-2">
+                                        <div class="col-sm-12 col-md-4 col-lg-2 mb-3 p-1">
                                             <div class="img-container">
                                                 <img src="{{url('images/'.$f)}}" alt="{{$f}}" style="max-width:95%;">
-                                                <div class="top-right"><button type="button" class="btn btn-outline-danger btn-sm">Hapus</button></div>
+                                                <div class="top-right"><button type="button" class="btn btn-outline-danger btn-sm" onclick="deleteImage('{{route('admin.data-ruangan.rapat.deleteFoto', ['id' => $ruang->id, 'foto' => $f])}}')">Hapus</button></div>
                                             </div>
                                         </div>
                                         @endforeach
@@ -191,6 +193,61 @@
             </div>
         </div>
     </section>
+
+    @push('scripts')
+    <script>
+        function deleteImage(url) {
+            Swal.fire({
+                title: 'Hapus foto tersebut?',
+                text: "Foto yang dihapus tidak bisa dikembalikan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Perform the delete request
+                    fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        }
+                    }).then(response => {
+                        if (response.ok) {
+                            Swal.fire({
+                                toast: true,
+                                position: "top-end",
+                                icon: "success",
+                                title: "Berhasil menghapus foto",
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire({
+                                toast: true,
+                                position: "top-end",
+                                icon: "error",
+                                title: "Gagal menghapus foto",
+                                showConfirmButton: false,
+                                timer: 2500
+                            });
+                        }
+                    }).catch(error => {
+                        Swal.fire(
+                            'Error!',
+                            'There was a problem deleting the item.',
+                            'error'
+                        );
+                    });
+                }
+            });
+        }
+    </script>
+    @endpush
 </main>
 
 @endsection
