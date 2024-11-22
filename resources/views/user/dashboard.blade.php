@@ -53,6 +53,7 @@
                                     @if (strpos($rooms->foto, ',') !== false)
                                         @php
                                             $fotoFoto = explode(',', $rooms->foto);
+                                            $waktuTersedia = explode(',', $rooms->time_available)
                                         @endphp
                                         <div class="col-md-4">
                                             <div id="roomCarousel{{$rooms->uuid}}" class="carousel slide" data-bs-ride="carousel">
@@ -80,28 +81,37 @@
                                     @endif
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <h5 class="card-title">Ruang Rapat Utama</h5>
-                                            <p class="card-text">Lantai Satu Gedung AD</p>
+                                            <h5 class="card-title">{{ $rooms->ruang }}</h5>
+                                            <p class="card-text">{{ $rooms->lokasi }}</p>
                                             {{-- Ini Desktop View --}}
                                             <ul class="list-unstyled d-none d-sm-block">
                                                 <li>
                                                     <strong>Waktu Tersedia:</strong>
                                                     <div class="row">
-                                                        <div class="col-4">
-                                                            <ul>
-                                                                <li>Pagi - Siang</li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-4">
-                                                            <ul>
-                                                                <li>Siang - Sore</li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="col-4">
-                                                            <ul>
-                                                                <li>Pagi - Sore</li>
-                                                            </ul>
-                                                        </div>
+                                                        @foreach ($waktuTersedia as $waktu)
+                                                            @switch($waktu)
+                                                                @case(1)
+                                                                    <div class="col-4">
+                                                                        <ul>
+                                                                            <li>Pagi - Siang</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    @break
+                                                                @case(2)
+                                                                    <div class="col-4">
+                                                                        <ul>
+                                                                            <li>Siang - Sore</li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    @break
+                                                                @default
+                                                                    <div class="col-4">
+                                                                        <ul>
+                                                                            <li>Pagi - Sore</li>
+                                                                        </ul>
+                                                                    </div>
+                                                            @endswitch
+                                                        @endforeach
                                                     </div>
                                                 </li>
                                             </ul>
@@ -110,9 +120,18 @@
                                                 <li>
                                                     <strong>Waktu Tersedia:</strong>
                                                     <ul>
-                                                        <li>Pagi - Siang</li>
-                                                        <li>Siang - Sore</li>
-                                                        <li>Pagi - Sore</li>
+                                                        @foreach ($waktuTersedia as $waktu)
+                                                            @switch($waktu)
+                                                                @case(1)
+                                                                    <li>Pagi - Siang</li>
+                                                                    @break
+                                                                @case(2)
+                                                                    <li>Siang - Sore</li>
+                                                                    @break
+                                                                @default
+                                                                    <li>Pagi - Sore</li>
+                                                            @endswitch
+                                                        @endforeach
                                                     </ul>
                                                 </li>
                                             </ul>
