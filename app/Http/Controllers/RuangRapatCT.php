@@ -156,12 +156,12 @@ class RuangRapatCT extends Controller
                 return back()->with('error', 'Terdapat kesalahan ketika menggunggah foto')->withInput();
             }
 
-            
+
             $rapat = MDataRuangRapat::find($request->id);
 
             $existFoto = $rapat->foto;
-            $newFoto = $existFoto.','.implode(',', $uploadedFileNames);
-            
+            $newFoto = $existFoto . ',' . implode(',', $uploadedFileNames);
+
             $rapat->ruang = $request->ruang;
             $rapat->lokasi = $request->lokasi;
             $rapat->id_gedung = $request->gedung;
