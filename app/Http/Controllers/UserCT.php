@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\MDataRuangRapat;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserCT extends Controller
 {
@@ -19,6 +20,15 @@ class UserCT extends Controller
             'title' => 'SIRARA | Dashboard',
 
             'listRuang' => $allRoom
+        ]);
+    }
+
+    public function booking(Request $request)
+    {
+        $room = MDataRuangRapat::where('uuid', $request->uuid)->firstOrFail();
+        return view('user.booking', [
+            'title' => 'SIRARA | Booking',
+            'data' => $room
         ]);
     }
 }
