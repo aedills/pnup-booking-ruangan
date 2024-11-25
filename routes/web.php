@@ -39,6 +39,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::prefix('/u')->name('user.')->group(function () {
     Route::get('/', [UserCT::class, 'index'])->name('index');
     Route::get('/list', [UserCT::class, 'list'])->name('list');
-    Route::get('/booking', [UserCT::class, 'booking'])->name('booking');
+    Route::get('/booking/{uuid}', [UserCT::class, 'booking'])->name('booking');
     Route::get('/riwayat', [UserCT::class, 'riwayat'])->name('riwayat');
 });
