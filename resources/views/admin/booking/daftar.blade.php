@@ -40,7 +40,8 @@
                                         <td>Gedung AD</td>
                                         <td>bang acc punyaku plis</td>
                                         <td>
-                                            <button class="btn btn-outline-info"> akshit</button>
+                                            <button class="btn btn-outline-danger"> Tolak</button>
+                                            <button class="btn btn-outline-success"> Terima</button>
                                         </td>
                                     </tr>
                                 </tbody>
