@@ -9,10 +9,18 @@ class MDataRuangRapat extends Model
     protected $table = 'data_ruangan';
     protected $primary_key = 'id';
     protected $fillable = [
-        'uuid', 'ruang', 'time_available', 'day_available', 'lokasi', 'id_gedung', 'kampus'
+        'uuid',
+        'ruang',
+        'time_available',
+        'day_available',
+        'lokasi',
+        'id_gedung',
+        'kampus',
+        'foto'
     ];
 
-    public function gedung(){
+    public function gedung()
+    {
         return $this->hasOne(MDataGedung::class, 'id', 'id_gedung');
     }
 }

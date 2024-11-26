@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\MDataRuangRapat;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserCT extends Controller
 {
@@ -11,14 +13,22 @@ class UserCT extends Controller
     {
         $allRoom = MDataRuangRapat::with('gedung')->get();
 
-        // $room = [];
-        // foreach($allRoom as $ar){
+        Carbon::setLocale('id');
 
-        // }
         return view('user/dashboard', [
             'title' => 'SIRARA | Dashboard',
 
-            'listRuang' => $allRoom
+            'listRuang' => $allRoom,
+            'day' => Carbon::now()->translatedFormat('l')
+        ]);
+    }
+
+    public function booking(Request $request)
+    {
+        $room = MDataRuangRapat::where('uuid', $request->uuid)->firstOrFail();
+        return view('user.booking', [
+            'title' => 'SIRARA | Booking',
+            'data' => $room
         ]);
     }
 }
