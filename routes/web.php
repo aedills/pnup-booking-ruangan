@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminCT;
+use App\Http\Controllers\booking;
 use App\Http\Controllers\DataGedung;
 use App\Http\Controllers\RuangRapatCT;
 use App\Http\Controllers\UserCT;
@@ -34,6 +35,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/update', [DataGedung::class, 'update'])->name('update');
         Route::post('/delete', [DataGedung::class, 'delete'])->name('delete');
     });
+    
+    Route::prefix('booking-list')->name('list.')->group(function (){
+        Route::get('/', [Booking::class, 'index'])->name('index');
+    });
+
 });
 
 Route::prefix('/u')->name('user.')->group(function () {
