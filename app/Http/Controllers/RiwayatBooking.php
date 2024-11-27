@@ -13,4 +13,11 @@ class RiwayatBooking extends Controller{
             'page_title' => 'Riwayat Booking',
         ]);
     }
+
+    public function detail(Request $request){
+        return view('admin.booking.detail',[
+            'title' => 'Booking List | SIRARA',
+            'page_title' => 'Riwayat Booking',
+        ]);
+    }
 }
