@@ -90,6 +90,7 @@ class RuangRapatCT extends Controller
         }
     }
 
+
     public function detail(Request $request)
     {
         $ruang = MDataRuangRapat::where('uuid', $request->uuid)->firstOrFail();

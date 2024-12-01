@@ -2,7 +2,10 @@
 
 use App\Http\Controllers\AdminBookingCT;
 use App\Http\Controllers\AdminCT;
+use App\Http\Controllers\booking;
+use App\Http\Controllers\DaftarBooking;
 use App\Http\Controllers\DataGedung;
+use App\Http\Controllers\RiwayatBooking;
 use App\Http\Controllers\RuangRapatCT;
 use App\Http\Controllers\UserCT;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +43,16 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/list', [AdminBookingCT::class, 'list'])->name('list');
         Route::get('/detail/{uuid}', [AdminBookingCT::class, 'detail'])->name('detail');
     });
+    
+    Route::prefix('daftar-booking')->name('daftar.')->group(function (){
+        Route::get('/', [DaftarBooking::class, 'index'])->name('index');
+    });
+
+    Route::prefix('riwayat-booking')->name('riwayat.')->group(function (){
+        Route::get('/', [RiwayatBooking::class, 'index'])->name('index');
+        Route::get('/detail',[RiwayatBooking::class, 'detail'])->name('detail');
+    });
+
 });
 
 Route::prefix('/u')->name('user.')->group(function () {
