@@ -79,6 +79,12 @@ $waktuTersedia = explode(',', $data->time_available);
                                 @endforeach
                             </select>
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Berkas (<strong><i>Opsional</i></strong>)</label>
+                            <input class="form-control" type="file" id="file" name="file"></input>
+                        </div>
+
                         <div style="display: none;" id="status">
                             <h6 class="text-danger">Ruangan telah dibooking penuh pada tanggal tersebut</h6>
                         </div>
