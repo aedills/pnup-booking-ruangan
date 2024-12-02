@@ -40,8 +40,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::prefix('booking')->name('booking.')->group(function () {
         Route::get('/list', [AdminBookingCT::class, 'list'])->name('list');
         Route::get('/detail/{uuid}', [AdminBookingCT::class, 'detail'])->name('detail');
-        Route::post('/accept/{uuid}', [AdminBookingCT::class, 'accept'])->name('accept');
-        Route::post('/decline/{uuid}', [AdminBookingCT::class, 'decline'])->name('decline');
+        Route::post('/accept', [AdminBookingCT::class, 'accept'])->name('accept');
+        Route::post('/decline', [AdminBookingCT::class, 'decline'])->name('decline');
     });
 
     Route::prefix('riwayat-booking')->name('riwayat.')->group(function () {

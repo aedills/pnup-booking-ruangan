@@ -62,8 +62,8 @@
                                                     <a href="">
                                                         <button type="button" class="btn btn-sm btn-outline-info">Detail</button>
                                                     </a>
-                                                    <button onclick="accept('{{route('admin.booking.accept', ['uuid' => $pend->uuid])}}')" type="button" class="btn btn-sm btn-outline-success">Terima</button>
-                                                    <button onclick="decline('{{route('admin.booking.accept', ['uuid' => $pend->uuid])}}')" type="button" class="btn btn-sm btn-outline-danger">Tolak</button>
+                                                    <button type="button" class="btn btn-sm btn-outline-success">Terima</button>
+                                                    <button type="button" class="btn btn-sm btn-outline-danger">Tolak</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -130,113 +130,6 @@
             </div>
         </div>
     </section>
-
-    @push('scripts')
-        <script>
-            // Accept
-            function accept(url) {
-                Swal.fire({
-                    title: 'Konfirmasi permintaan tersebut?',
-                    text: "Permintaan booking lain pada tanggal dan waktu tersebut akan ditolak. Anda masih dapat melakukan pembatalan konfirmasi tersebut.",
-                    icon: 'info',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Konfirmasi',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Perform the delete request
-                        fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            }
-                        }).then(response => {
-                            if (response.ok) {
-                                Swal.fire({
-                                    toast: true,
-                                    position: "top-end",
-                                    icon: "success",
-                                    title: "Berhasil melakukan konfirmasi",
-                                    showConfirmButton: false,
-                                    timer: 2500
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    toast: true,
-                                    position: "top-end",
-                                    icon: "error",
-                                    title: "Gagal melakukan konfirmasi",
-                                    showConfirmButton: false,
-                                    timer: 2500
-                                });
-                            }
-                        }).catch(error => {
-                            Swal.fire(
-                                'Error!',
-                                'There was a problem deleting the item.',
-                                'error'
-                            );
-                        });
-                    }
-                });
-            }
-            
-            // Accept
-            function decline(url) {
-                Swal.fire({
-                    title: 'Tolak permintaan tersebut?',
-                    text: "Permintaan tersebut tidak dapat dikembalikan.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Tolak',
-                    cancelButtonText: 'Batal'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        fetch(url, {
-                            method: 'POST',
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                            }
-                        }).then(response => {
-                            if (response.ok) {
-                                Swal.fire({
-                                    toast: true,
-                                    position: "top-end",
-                                    icon: "success",
-                                    title: "Permintaan berhasil ditolak",
-                                    showConfirmButton: false,
-                                    timer: 2500
-                                }).then(() => {
-                                    location.reload();
-                                });
-                            } else {
-                                Swal.fire({
-                                    toast: true,
-                                    position: "top-end",
-                                    icon: "error",
-                                    title: "Permintaan berhasil ditolak",
-                                    showConfirmButton: false,
-                                    timer: 2500
-                                });
-                            }
-                        }).catch(error => {
-                            Swal.fire(
-                                'Error!',
-                                'There was a problem deleting the item.',
-                                'error'
-                            );
-                        });
-                    }
-                });
-            }
-        </script>
-    @endpush
 
 </main>
 
