@@ -56,12 +56,12 @@ class UserCT extends Controller
                 'nomor_hp' => 'required|string|max:14',
                 'nama_rapat' => 'required|string',
                 'pesan' => 'nullable|string',
-                'tanggal' => 'required|date',
+                'tanggal_booking' => 'required|date',
                 'waktu' => 'required|string|max:1',
             ]);
 
 
-            $code = Carbon::now()->format('ymd');
+            $code = Carbon::createFromFormat('d-m-Y', $request->tanggal_booking)->format('ymd');
             switch ($request->waktu) {
                 case '1':
                     $code = $code . 'A';
@@ -86,7 +86,7 @@ class UserCT extends Controller
             $booking->nama = $request->nama;
             $booking->no_hp = $request->nomor_hp;
             $booking->agenda_rapat = $request->nama_rapat;
-            $booking->tanggal = Carbon::createFromFormat('d-m-Y', $request->tanggal)->format('Y-m-d');
+            $booking->tanggal = Carbon::createFromFormat('d-m-Y', $request->tanggal_booking)->format('Y-m-d');
             $booking->uuid_ruang = $request->uuid;
             $booking->kode_waktu = $request->waktu;
             $booking->status = 'none';
@@ -94,7 +94,7 @@ class UserCT extends Controller
             $booking->save();
 
             $pesan = $request->pesan != '' ? $request->pesan : '-';
-            $tanggal = Carbon::parse($request->tanggal)->translatedFormat('d F Y');
+            $tanggal = Carbon::parse($request->tanggal_booking)->translatedFormat('d F Y');
             switch ($request->waktu) {
                 case '1':
                     $waktu = 'Pagi (08:00) - Siang (12:00)';
@@ -211,7 +211,7 @@ class UserCT extends Controller
             $uuid = $validated['uuid'];
             $available = [];
 
-            $allItems = MDataBooking::where('tanggal', $date)->where('uuid_ruang', $uuid)->pluck('kode_waktu')->toArray();
+            $allItems = MDataBooking::where('tanggal', $date)->where('uuid_ruang', $uuid)->where('status', 'accept')->pluck('kode_waktu')->toArray();
 
             if (in_array('3', $allItems)) {
                 $available = [];

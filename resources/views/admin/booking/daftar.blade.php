@@ -27,23 +27,47 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No.</th>
+                                        <th scope="col">Kode Booking</th>
                                         <th scope="col">Nama</th>
-                                        <th scope="col">Nama Gedung</th>
-                                        <th scope="col">Nama Ruangan</th>
+                                        <th scope="col">Ruangan</th>
+                                        <th scope="col">Tanggal</th>
+                                        <th scope="col">Waktu</th>
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Rifqi</td>
-                                        <td>Gedung AD</td>
-                                        <td>bang acc punyaku plis</td>
-                                        <td>
-                                            <button class="btn btn-outline-danger"> Tolak</button>
-                                            <button class="btn btn-outline-success"> Terima</button>
-                                        </td>
-                                    </tr>
+                                    @foreach($pending as $pend)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$pend->kode}}</td>
+                                            <td>{{$pend->nama}}</td>
+                                            <td>{{$pend->ruang->ruang}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($pend->tanggal)->locale('id')->isoFormat('D MMMM YYYY') }}</td>
+                                            <td>
+                                                @switch($pend->kode_waktu)
+                                                    @case(1)
+                                                        Pagi - Siang
+                                                        @break
+                                                    @case(2)
+                                                        Siang - Sore
+                                                        @break
+                                                    @case(3)
+                                                        Pagi - Sore
+                                                        @break
+                                                    @default
+                                                @endswitch
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-center align-item-center gap-1">
+                                                    <a href="">
+                                                        <button type="button" class="btn btn-sm btn-outline-info">Detail</button>
+                                                    </a>
+                                                    <button onclick="accept('{{route('admin.booking.accept', ['uuid' => $pend->uuid])}}')" type="button" class="btn btn-sm btn-outline-success">Terima</button>
+                                                    <button onclick="decline('{{route('admin.booking.accept', ['uuid' => $pend->uuid])}}')" type="button" class="btn btn-sm btn-outline-danger">Tolak</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -60,22 +84,41 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">No.</th>
+                                        <th scope="col">Kode Booking</th>
                                         <th scope="col">Nama</th>
-                                        <th scope="col">Nama Gedung</th>
-                                        <th scope="col">Nama Ruangan</th>
+                                        <th scope="col">Ruangan</th>
+                                        <th scope="col">Tanggal</th>
+                                        <th scope="col">Waktu</th>
                                         <th scope="col">Aksi</th>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Rifqi</td>
-                                        <td>Gedung AD</td>
-                                        <td>makasih udah di acc bang</td>
-                                        <td>
-                                            <button class="btn btn-outline-info"> akshit</button>
-                                        </td>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach($accept as $acc)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$acc->kode}}</td>
+                                            <td>{{$acc->nama}}</td>
+                                            <td>{{$acc->ruang->ruang}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($acc->tanggal)->locale('id')->isoFormat('D MMMM YYYY') }}</td>
+                                            <td>
+                                                @switch($pend->kode_waktu)
+                                                    @case(1)
+                                                        Pagi - Siang
+                                                        @break
+                                                    @case(2)
+                                                        Siang - Sore
+                                                        @break
+                                                    @case(3)
+                                                        Pagi - Sore
+                                                        @break
+                                                    @default
+                                                @endswitch
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-outline-info">Detail</button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -88,81 +131,112 @@
         </div>
     </section>
 
-    <!-- Modal Section -->
-    <div class="modal fade" id="addModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Tambah Data Gedung</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{route('admin.gedung.store')}}" method="post" enctype="multipart/form-data" id="addForm">
-                        @csrf
-                        <div class="row mb-3">
-                            <label for="gedung" class="col-sm-3 col-form-label">Nama Gedung</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="gedung" name="gedung" placeholder="Nama Gedung" required>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label" for="kampus">Lokasi Kampus</label>
-                            <div class="col-sm-9">
-                                <select class="form-select" name="kampus" id="kampus" required>
-                                    <option value="" hidden>Pilih Kampus</option>
-                                    <option value="1">Kampus 1</option>
-                                    <option value="2">Kampus 2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" form="addForm" class="btn btn-sm btn-outline-primary">Tambah</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="editModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Data Gedung</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{route('admin.gedung.update')}}" method="post" enctype="multipart/form-data" id="editForm">
-                        @csrf
-                        <input type="text" name="uuid" value="" hidden>
-                        <div class="row mb-3">
-                            <label for="gedung" class="col-sm-3 col-form-label">Nama Gedung</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="gedung" name="gedung" value="" required>
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label" for="kampus">Lokasi Kampus</label>
-                            <div class="col-sm-9">
-                                <select class="form-select" name="kampus" id="kampus" required>
-                                    <option value="" hidden>Pilih Kampus</option>
-                                    <option value="1">Kampus 1</option>
-                                    <option value="2">Kampus 2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal">Batal</button>
-                    <button type="submit" form="editForm" class="btn btn-sm btn-outline-primary">Simpan</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    @push('scripts')
+        <script>
+            // Accept
+            function accept(url) {
+                Swal.fire({
+                    title: 'Konfirmasi permintaan tersebut?',
+                    text: "Permintaan booking lain pada tanggal dan waktu tersebut akan ditolak. Anda masih dapat melakukan pembatalan konfirmasi tersebut.",
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Konfirmasi',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Perform the delete request
+                        fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            }
+                        }).then(response => {
+                            if (response.ok) {
+                                Swal.fire({
+                                    toast: true,
+                                    position: "top-end",
+                                    icon: "success",
+                                    title: "Berhasil melakukan konfirmasi",
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    toast: true,
+                                    position: "top-end",
+                                    icon: "error",
+                                    title: "Gagal melakukan konfirmasi",
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                });
+                            }
+                        }).catch(error => {
+                            Swal.fire(
+                                'Error!',
+                                'There was a problem deleting the item.',
+                                'error'
+                            );
+                        });
+                    }
+                });
+            }
+            
+            // Accept
+            function decline(url) {
+                Swal.fire({
+                    title: 'Tolak permintaan tersebut?',
+                    text: "Permintaan tersebut tidak dapat dikembalikan.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Tolak',
+                    cancelButtonText: 'Batal'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            }
+                        }).then(response => {
+                            if (response.ok) {
+                                Swal.fire({
+                                    toast: true,
+                                    position: "top-end",
+                                    icon: "success",
+                                    title: "Permintaan berhasil ditolak",
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                }).then(() => {
+                                    location.reload();
+                                });
+                            } else {
+                                Swal.fire({
+                                    toast: true,
+                                    position: "top-end",
+                                    icon: "error",
+                                    title: "Permintaan berhasil ditolak",
+                                    showConfirmButton: false,
+                                    timer: 2500
+                                });
+                            }
+                        }).catch(error => {
+                            Swal.fire(
+                                'Error!',
+                                'There was a problem deleting the item.',
+                                'error'
+                            );
+                        });
+                    }
+                });
+            }
+        </script>
+    @endpush
 
 </main>
 
