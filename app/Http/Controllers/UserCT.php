@@ -93,13 +93,11 @@ class UserCT extends Controller
             $booking->status = 'none';
 
             if ($request->hasFile('file')) {
-                $file = $request->file('file');
-                $sanitasiNamaFile = preg_replace('/[^A-Za-z0-9\-_\.]/', '_', pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
-                $namaFile =  $sanitasiNamaFile . Str::random() . '.' . $file->getClientOriginalExtension();
+                $f = $request->file('file');
+                $newFileName = preg_replace('/[^A-Za-z0-9\-_\.]/', '_', $f->getClientOriginalName()) . '-' . Str::random(8) . '.' . $f->getClientOriginalExtension();
+                $f->move(public_path('images'), $newFileName);
 
-                $filePath = $file->storeAs('files', $namaFile, 'public');
-
-                $booking->file = $filePath;
+                $booking->file = $newFileName;
             }
 
             $booking->save();
