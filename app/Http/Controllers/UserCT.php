@@ -7,6 +7,7 @@ use App\Models\MDataRuangRapat;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -58,8 +59,8 @@ class UserCT extends Controller
                 'pesan' => 'nullable|string',
                 'tanggal_booking' => 'required|date',
                 'waktu' => 'required|string|max:1',
+                'file' => 'file|max:10240'
             ]);
-
 
             $code = Carbon::createFromFormat('d-m-Y', $request->tanggal_booking)->format('ymd');
             switch ($request->waktu) {
@@ -90,6 +91,16 @@ class UserCT extends Controller
             $booking->uuid_ruang = $request->uuid;
             $booking->kode_waktu = $request->waktu;
             $booking->status = 'none';
+
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $sanitasiNamaFile = preg_replace('/[^A-Za-z0-9\-_\.]/', '_', pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME));
+                $namaFile =  $sanitasiNamaFile . Str::random() . '.' . $file->getClientOriginalExtension();
+
+                $filePath = $file->storeAs('files', $namaFile, 'public');
+
+                $booking->file = $filePath;
+            }
 
             $booking->save();
 
