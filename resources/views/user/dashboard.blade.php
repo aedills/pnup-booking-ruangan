@@ -47,12 +47,23 @@
         </nav>
     </div>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <div class="row">
         <div class="col-lg-12">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Ruangan Tersedia</h5>
+                    <div class="mb-4">
+                        <label class="form-label">Sesuaikan Tanggal</label>
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-calendar"></i>
+                            </span>
+                            <input type="text" class="form-control" id="tanggal" name="date" required oninput="reloadItem(this.value)" value="{{$dateSet != null ? $dateSet : ''}}">
+                        </div>
+                    </div>
                     @foreach ($listRuang as $rooms)
                         @php
                         @$dayAvailable = explode(',', $rooms->day_available);
@@ -93,7 +104,7 @@
                                         <div class="col-md-8">
                                             <div class="card-body">
                                                 <h5 class="card-title">{{ $rooms->ruang }}</h5>
-                                                <p class="card-text">{{ $rooms->lokasi }}</p>
+                                                <p class="card-text">{{ $rooms->lokasi }} (Kampus {{$rooms->kampus}})</p>
                                                 <!-- Desktop -->
                                                 <ul class="list-unstyled d-none d-sm-block">
                                                     <li>
@@ -156,11 +167,9 @@
                                                         </ul>
                                                     </li>
                                                 </ul>
-                                                <button class="btn btn-primary">
-                                                    <a href="{{route('user.booking', $rooms->uuid)}}" class="text-white">
-                                                        Booking Ruangan
-                                                    </a>
-                                                </button>
+                                                <a href="{{route('user.booking', ['uuid' => $rooms->uuid])}}">
+                                                    <button class="btn btn-outline-primary btn-sm">Booking</button>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -172,6 +181,23 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+        flatpickr('#tanggal', {
+            dateFormat: 'd-m-Y',
+            minDate: 'today'
+        });
+
+        function reloadItem(date){
+            console.log(date);
+            const path = "{{route('user.index')}}";
+            window.location.href = path+"?date="+date;
+
+            // i want to redirect to path + ?date=date
+        }
+    </script>
+    @endpush
 
 </main>
 @endsection

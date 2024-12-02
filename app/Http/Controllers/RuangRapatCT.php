@@ -13,7 +13,7 @@ class RuangRapatCT extends Controller
     public function index(Request $request)
     {
 
-        $ruang = MDataRuangRapat::all();
+        $ruang = MDataRuangRapat::with('gedung')->get();
 
         return view('admin.ruangan.rapat.index', [
             'title' => 'Ruang Rapat | SIRARA',
@@ -89,6 +89,7 @@ class RuangRapatCT extends Controller
             return back()->with('error', 'Terdapat kesalahan ketika menambahkan data')->withInput();
         }
     }
+
 
     public function detail(Request $request)
     {

@@ -37,14 +37,14 @@
     <li class="nav-heading">Booking</li>
     
     <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.gedung.index')}}">
+        <a class="nav-link collapsed" href="{{route('admin.daftar.index')}}">
             <i class="fa-solid fa-list-check"></i>
             <span>Daftar Booking</span>
         </a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.gedung.index')}}">
+        <a class="nav-link collapsed" href="{{route('admin.riwayat.index')}}">
             <i class="fa-solid fa-clock-rotate-left"></i>
             <span>Riwayat Booking</span>
         </a>
