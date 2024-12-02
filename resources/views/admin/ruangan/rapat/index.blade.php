@@ -52,7 +52,7 @@
                                             <td scope="row">{{$loop->iteration}}</td>
                                             <td>{{$list->ruang}}</td>
                                             <td>{{$list->lokasi}}</td>
-                                            <td>{{$list->id_gedung}} (Kampus {{$list->kampus}})</td>
+                                            <td>{{$list->gedung->gedung}} (Kampus {{$list->kampus}})</td>
                                             <td>
                                                 <ul>
                                                     @foreach($time as $t)
