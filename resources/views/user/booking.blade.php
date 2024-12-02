@@ -57,7 +57,7 @@
                         <div class="mb-3">
                             <label class="form-label">Waktu</label>
                             <select class="form-select" name="waktu" id="waktu">
-                                <option selected>Silahkan pilih waktu</option>
+                                <option selected disabled>Silahkan pilih waktu</option>
                                 @foreach ($waktuTersedia as $waktu)
                                     @switch($waktu)
                                         @case(1)

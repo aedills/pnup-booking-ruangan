@@ -156,7 +156,11 @@
                                                         </ul>
                                                     </li>
                                                 </ul>
-                                                <button class="btn btn-primary">Booking Ruangan</button>
+                                                <button class="btn btn-primary">
+                                                    <a href="{{route('user.booking', $rooms->uuid)}}" class="text-white">
+                                                        Booking Ruangan
+                                                    </a>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
