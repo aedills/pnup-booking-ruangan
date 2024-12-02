@@ -2,8 +2,6 @@
 
 use App\Http\Controllers\AdminBookingCT;
 use App\Http\Controllers\AdminCT;
-use App\Http\Controllers\booking;
-use App\Http\Controllers\DaftarBooking;
 use App\Http\Controllers\DataGedung;
 use App\Http\Controllers\RiwayatBooking;
 use App\Http\Controllers\RuangRapatCT;
@@ -11,7 +9,7 @@ use App\Http\Controllers\UserCT;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect('/u');
+    return redirect()->route('user.index');
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -42,20 +40,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::prefix('booking')->name('booking.')->group(function () {
         Route::get('/list', [AdminBookingCT::class, 'list'])->name('list');
         Route::get('/detail/{uuid}', [AdminBookingCT::class, 'detail'])->name('detail');
-    });
-    
-    Route::prefix('daftar-booking')->name('daftar.')->group(function (){
-        Route::get('/', [DaftarBooking::class, 'index'])->name('index');
+        Route::post('/accept', [AdminBookingCT::class, 'accept'])->name('accept');
+        Route::post('/decline', [AdminBookingCT::class, 'decline'])->name('decline');
     });
 
-    Route::prefix('riwayat-booking')->name('riwayat.')->group(function (){
+    Route::prefix('riwayat-booking')->name('riwayat.')->group(function () {
         Route::get('/', [RiwayatBooking::class, 'index'])->name('index');
-        Route::get('/detail',[RiwayatBooking::class, 'detail'])->name('detail');
+        Route::get('/detail', [RiwayatBooking::class, 'detail'])->name('detail');
     });
-
 });
 
-Route::prefix('/u')->name('user.')->group(function () {
+Route::prefix('/user')->name('user.')->group(function () {
     Route::get('/{date?}', [UserCT::class, 'index'])->name('index');
     Route::get('/list', [UserCT::class, 'list'])->name('list');
     Route::get('/booking/{uuid}', [UserCT::class, 'booking'])->name('booking');

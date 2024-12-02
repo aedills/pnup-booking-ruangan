@@ -37,7 +37,7 @@
     <li class="nav-heading">Booking</li>
     
     <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('admin.daftar.index')}}">
+        <a class="nav-link collapsed" href="{{route('admin.booking.list')}}">
             <i class="fa-solid fa-list-check"></i>
             <span>Daftar Booking</span>
         </a>
