@@ -74,7 +74,6 @@
                                 <input disabled type="text" class="form-control" id="lokasi" name="lokasi" maxlength="100">
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
