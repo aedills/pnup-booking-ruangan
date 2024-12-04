@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\MDataBooking;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class AdminBookingCT extends Controller
 {
@@ -55,5 +56,24 @@ class AdminBookingCT extends Controller
                 'error' => $err->getMessage()
             ], 500);
         }
+    }
+
+    public function decline(Request $request){
+      try {
+        $request->validate([
+            'uuid'=>'required|string|max:100',
+            'pesan'=>'nullable|string|max:255'
+        ]);
+
+        $item = MDataBooking::where('uuid', $request->uuid)->firstOrFail();
+        $item->status='decline';
+        $item->save();
+        return back()->with('success', 'Permintaan booking berhasil ditolak');
+      }
+      catch (ValidationException $e)
+      {
+        return back()->with('error', 'Terdapat kesalahan pada input UUID');
+      }
+        
     }
 }
