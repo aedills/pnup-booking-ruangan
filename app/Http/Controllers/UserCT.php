@@ -95,7 +95,7 @@ class UserCT extends Controller
             if ($request->hasFile('file')) {
                 $f = $request->file('file');
                 $newFileName = preg_replace('/[^A-Za-z0-9\-_\.]/', '_', pathinfo($f->getClientOriginalName(), PATHINFO_FILENAME)) . '-' . Str::random(8) . '.' . $f->getClientOriginalExtension();
-                $f->move(public_path('images'), $newFileName);
+                $f->move(public_path('files'), $newFileName);
 
                 $booking->file = $newFileName;
             }
