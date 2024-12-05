@@ -30,11 +30,29 @@ class AdminBookingCT extends Controller
     }
 
     public function detail(Request $request)
-    {
-        return view('admin.booking.detail', [
-            'title' => 'Booking List | SIRARA',
-            'page_title' => 'Riwayat Booking',
-        ]);
+    {  
+        $item = MDataBooking::where('uuid',$request->uuid)->firstOrFail();
+
+        $waktu = '';
+            $waktuMap = [
+                '1' => 'Pagi (08:00) - Siang (12:00)',
+                '2' => 'Siang (12:00) - Sore (15:00)',
+                '3' => 'Pagi (08:00) - Sore (15:00)'
+            ];
+
+        $waktu = $waktuMap[$item->kode_waktu] ?? 'Terjadi kesalahan dalam mengurai waktu';
+        if($item){
+            return view('admin.booking.detail', [
+                'title' => 'Booking List | SIRARA',
+                'page_title' => 'Detail Booking',
+                'detail' => $item ,
+                'waktu' => $waktu
+                      
+            ]);
+        }
+        else{
+            return back()->with('error', 'Data tidak ditemukan');
+        }
     }
 
     public function accept(Request $request)

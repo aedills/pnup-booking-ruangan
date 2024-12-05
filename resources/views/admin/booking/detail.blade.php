@@ -28,51 +28,51 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="ruang" class="col-sm-2 col-form-label">Nama Ruangan</label>
+                            <label for="ruang" class="col-sm-2 col-form-label">Kode Booking</label>
                             <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" id="ruang" name="ruang">
+                                <input disabled value="{{$detail->kode}}" type="text" class="form-control" id="ruang" name="ruang">
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="lokasi" class="col-sm-2 col-form-label">Lokasi</label>
+                            <label for="lokasi" class="col-sm-2 col-form-label">Nama</label>
                             <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" id="lokasi" name="lokasi" maxlength="100">
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="gedung" class="col-sm-2 col-form-label">Lokasi Gedung</label>
-                            <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" id="lokasi" name="lokasi" maxlength="100">
+                                <input disabled value="{{$detail->nama}}" type="text" class="form-control" id="lokasi" name="lokasi" maxlength="100">
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="kampus">Lokasi Kampus</label>
+                            <label for="gedung" class="col-sm-2 col-form-label">No HP</label>
                             <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" id="lokasi" name="lokasi" maxlength="100">
+                                <input disabled value="{{$detail->no_hp}}" type="text" class="form-control" id="lokasi" name="lokasi" maxlength="100">
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="kampus">Hari Booking</label>
+                            <label class="col-sm-2 col-form-label" for="kampus">Agenda Rapat</label>
                             <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" id="lokasi" name="lokasi" maxlength="100">
+                                <input disabled value="{{$detail->agenda_rapat}}" type="text" class="form-control" id="lokasi" name="lokasi" maxlength="100">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label" for="kampus">Tanggal</label>
+                            <div class="col-sm-10">
+                                <input disabled value="{{$detail->tanggal}}" type="text" class="form-control" id="lokasi" name="lokasi" maxlength="100">
                             </div>
                         </div>
                         
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="kampus">Waktu Booking</label>
                             <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" id="lokasi" name="lokasi" maxlength="100">
+                                <input disabled value="{{$waktu}}" type="text" class="form-control" id="lokasi" name="lokasi" maxlength="100">
                             </div>
                         </div>
 
                         <div class="row mb-3">
-                            <label class="col-sm-2 col-form-label" for="kampus">Foto</label>
+                            <label class="col-sm-2 col-form-label" for="kampus">File</label>
                             <div class="col-sm-10">
-                                <input disabled type="text" class="form-control" id="lokasi" name="lokasi" maxlength="100">
-                            </div>
+                                <a href="{{url('/files/'.$detail->file)}}" id="lokasi" name="lokasi" target="_blank">{{$detail->file}}</a>
+                            </div>                            
                         </div>
                     </div>
                 </div>
