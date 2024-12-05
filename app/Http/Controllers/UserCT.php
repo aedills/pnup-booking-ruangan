@@ -41,7 +41,8 @@ class UserCT extends Controller
         $room = MDataRuangRapat::where('uuid', $request->uuid)->firstOrFail();
         return view('user.booking', [
             'title' => 'SIRARA | Booking',
-            'data' => $room
+            'data' => $room,
+            'date' => $request->date
         ]);
     }
 

@@ -167,7 +167,7 @@
                                                         </ul>
                                                     </li>
                                                 </ul>
-                                                <a href="{{route('user.booking', ['uuid' => $rooms->uuid])}}">
+                                                <a href="{{route('user.booking', ['uuid' => $rooms->uuid, 'date' => $dateSet])}}">
                                                     <button class="btn btn-outline-primary btn-sm">Booking</button>
                                                 </a>
                                             </div>

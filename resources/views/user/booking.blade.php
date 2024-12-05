@@ -55,7 +55,7 @@ $waktuTersedia = explode(',', $data->time_available);
                                 <span class="input-group-text">
                                     <i class="bi bi-calendar"></i>
                                 </span>
-                                <input type="text" class="form-control" id="tanggal" name="tanggal_booking" required oninput="checkTime(this.value, '{{$data->uuid}}')">
+                                <input value="{{$date ? $date : ''}}" type="text" class="form-control" id="tanggal" name="tanggal_booking" required oninput="checkTime(this.value, '{{$data->uuid}}')">
                             </div>
                         </div>
 
@@ -168,6 +168,8 @@ $waktuTersedia = explode(',', $data->time_available);
                 }
             });
         });
+
+        checkTime("{{$date}}", "{{$data->uuid}}");
     </script>
 
 

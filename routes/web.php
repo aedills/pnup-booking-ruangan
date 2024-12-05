@@ -46,7 +46,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::prefix('riwayat-booking')->name('riwayat.')->group(function () {
         Route::get('/', [RiwayatBooking::class, 'index'])->name('index');
-        Route::get('/detail', [RiwayatBooking::class, 'detail'])->name('detail');
+        // Route::get('/detail', [RiwayatBooking::class, 'detail'])->name('detail');
     });
 });
 
