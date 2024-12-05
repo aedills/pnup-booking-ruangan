@@ -215,7 +215,32 @@ class UserCT extends Controller
 
     public function doSearch(Request $request)
     {
-        dd($request);
+        try {
+            $request->validate([
+                'kode' => 'required|string'
+            ]);
+
+            $dataBooking = MDataBooking::where('kode', $request->kode)->with('ruang')->firstOrFail();
+            if ($dataBooking) {
+                $dataBooking->tanggal = Carbon::parse($dataBooking->tanggal)->locale('id')->translatedFormat('l, d-m-Y');
+                return view('user.search', [
+                    'title' => 'Cari Data Booking',
+                    'success' => true,
+                    'dataBooking' => $dataBooking
+                ]);
+            }
+        } catch (ValidationException $e) {
+            return back()->with('error', 'Gagal: ' . $e->getMessage())->withInput();
+        } catch (\Exception $err) {
+            if ($err->getMessage() === "No query results for model [App\\Models\\MDataBooking].") {
+                return back()->with('error', 'Kode booking tidak ditemukan')->withInput();
+            }
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong',
+                'error' => $err->getMessage()
+            ], 500);
+        }
     }
 
     // Ajax
