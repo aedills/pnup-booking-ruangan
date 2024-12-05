@@ -26,24 +26,48 @@
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th scope="col">No</th>
                                         <th scope="col">Nama</th>
                                         <th scope="col">Agenda Rapat</th>
                                         <th scope="col">Nama Ruangan</th>
-                                        <th scope="col">Waktu</th>
                                         <th scope="col">Tanggal</th>
-                                        <th scope="col">Aksi</th>
+                                        <th scope="col">Waktu</th>
+                                        <th scope="col">Berkas</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>Rifqi</td>
-                                        <td>Rapat testing</td>
-                                        <td>Ruang Rapat?</td>
-                                        <td>pagi-siang</td>
-                                        <td>10-12-2024</td>
-                                        <td>
-                                        </td>
-                                    </tr>
+                                    @foreach($riwayat as $list)
+                                        <tr>
+                                            <td>{{$loop->iteration}}</td>
+                                            <td>{{$list->nama}}</td>
+                                            <td>{{$list->agenda_rapat}}</td>
+                                            <td>{{$list->ruang->ruang}}</td>
+                                            <td>{{ \Carbon\Carbon::parse($list->tanggal)->locale('id')->isoFormat('D MMMM YYYY') }}</td>
+                                            <td>
+                                                @switch($list->kode_waktu)
+                                                    @case(1)
+                                                        Pagi - Siang
+                                                        @break
+                                                    @case(2)
+                                                        Siang - Sore
+                                                        @break
+                                                    @case(3)
+                                                        Pagi - Sore
+                                                        @break
+                                                    @default
+                                                @endswitch
+                                            </td>
+                                            <td>
+                                                @if($list->file)
+                                                    <a href="{{url('/files/'.$list->file)}}" target="_blank">
+                                                        <button type="button" class="btn btn-sm btn-outline-info"><i class="fa-regular fa-file"></i> Lihat</button>
+                                                    </a>
+                                                @else
+                                                    <button type="button" class="btn btn-sm btn-outline-info"><i class="fa-solid fa-xmark"></i> Tidak ada</button>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

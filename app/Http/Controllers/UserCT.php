@@ -7,9 +7,7 @@ use App\Models\MDataRuangRapat;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
-use Symfony\Component\HttpFoundation\Response;
 
 class UserCT extends Controller
 {
@@ -128,8 +126,8 @@ class UserCT extends Controller
             // dd($custMessage);
             // dd($message);
 
-            $this->sendToNo($request->nomor_hp, $custMessage);
-            $this->sendToNo(ENV('API_WA_ADMIN'), $message);
+            $this->sendToNumber($request->nomor_hp, $custMessage);
+            $this->sendToNumber(ENV('API_WA_ADMIN'), $message);
             // $this->sendToGroup($message);
 
             return back()->with('success', 'Berhasil melakukan booking, silahkan tunggu konfirmasi dari pihak rumah tangga.');
@@ -142,7 +140,7 @@ class UserCT extends Controller
         }
     }
 
-    private function sendToNo($to, $message)
+    private function sendToNumber($to, $message)
     {
         $dataSending = array();
         $dataSending["api_key"] = ENV('API_KEY');

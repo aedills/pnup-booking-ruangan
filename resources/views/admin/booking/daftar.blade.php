@@ -218,8 +218,7 @@
                                         <td>{{ $dec->kode }}</td>
                                         <td>{{ $dec->nama }}</td>
                                         <td>{{ $dec->ruang->ruang }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($dec->tanggal)->locale('id')->isoFormat('D MMMM YYYY') }}
-                                        </td>
+                                        <td>{{ \Carbon\Carbon::parse($dec->tanggal)->locale('id')->isoFormat('D MMMM YYYY') }}</td>
                                         <td>
                                             @switch($dec->kode_waktu)
                                             @case(1)
