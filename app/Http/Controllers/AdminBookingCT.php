@@ -30,27 +30,26 @@ class AdminBookingCT extends Controller
     }
 
     public function detail(Request $request)
-    {  
-        $item = MDataBooking::where('uuid',$request->uuid)->firstOrFail();
+    {
+        $item = MDataBooking::where('uuid', $request->uuid)->firstOrFail();
 
         $waktu = '';
-            $waktuMap = [
-                '1' => 'Pagi (08:00) - Siang (12:00)',
-                '2' => 'Siang (12:00) - Sore (15:00)',
-                '3' => 'Pagi (08:00) - Sore (15:00)'
-            ];
+        $waktuMap = [
+            '1' => 'Pagi (08:00) - Siang (12:00)',
+            '2' => 'Siang (12:00) - Sore (15:00)',
+            '3' => 'Pagi (08:00) - Sore (15:00)'
+        ];
 
         $waktu = $waktuMap[$item->kode_waktu] ?? 'Terjadi kesalahan dalam mengurai waktu';
-        if($item){
+        if ($item) {
             return view('admin.booking.detail', [
                 'title' => 'Booking List | SIRARA',
                 'page_title' => 'Detail Booking',
-                'detail' => $item ,
+                'detail' => $item,
                 'waktu' => $waktu
-                      
+
             ]);
-        }
-        else{
+        } else {
             return back()->with('error', 'Data tidak ditemukan');
         }
     }
@@ -164,7 +163,52 @@ class AdminBookingCT extends Controller
             $waktu = $waktuMap[$item->kode_waktu] ?? 'Terdapat kesalahan dalam mengurai waktu';
             $tanggal = Carbon::parse($item->tanggal)->translatedFormat('d F Y');
 
-            $message = "*=== KONFIRMASI PENOLAKAN ===*\n\nMohon maaf permintaan booking Anda:\nKode Booking: " . $item->kode . "\nNama: " . $item->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $item->agenda_rapat . "\nRuang: " . $item->ruang->ruang . "\nLokasi: " . $item->ruang->lokasi . "\n\nTidak dapat kami penuhi dengan alasan " . $request->pesan . ".\n\nTerima Kasih";
+            $message = "*=== KONFIRMASI PENOLAKAN ===*\n\nMohon maaf permintaan booking Anda:\n\nKode Booking: " . $item->kode . "\nNama: " . $item->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $item->agenda_rapat . "\nRuang: " . $item->ruang->ruang . "\nLokasi: " . $item->ruang->lokasi . "\n\nTidak dapat kami penuhi dengan alasan " . $request->pesan . ".\n\nTerima Kasih";
+
+            $this->sendToNo($item->no_hp, $message);
+            $item->status = 'decline';
+            $item->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => $message
+            ], 200);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation Error',
+                'errors' => 'Terdapat kesalahan pada parameter UUID'
+            ], 422);
+        } catch (\Exception $err) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Something went wrong',
+                'error' => $err->getMessage()
+            ], 500);
+        }
+    }
+
+    public function cancel(Request $request)
+    {
+        try {
+            $request->validate([
+                'uuid' => 'required|string|max:100',
+                'pesan' => 'nullable|string|max:255'
+            ]);
+
+            $item = MDataBooking::where('uuid', $request->uuid)->with('ruang')->firstOrFail();
+
+            $waktu = '';
+            $waktuMap = [
+                '1' => 'Pagi (08:00) - Siang (12:00)',
+                '2' => 'Siang (12:00) - Sore (15:00)',
+                '3' => 'Pagi (08:00) - Sore (15:00)'
+            ];
+
+            $waktu = $waktuMap[$item->kode_waktu] ?? 'Terdapat kesalahan dalam mengurai waktu';
+            $tanggal = Carbon::parse($item->tanggal)->translatedFormat('d F Y');
+
+            $message = "*=== KONFIRMASI PEMBATALAN ===*\n\nMohon maaf, booking Anda:\n\nKode Booking: " . $item->kode . "\nNama: " . $item->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $item->agenda_rapat . "\nRuang: " . $item->ruang->ruang . "\nLokasi: " . $item->ruang->lokasi . "\n\nKami batalkan dengan alasan " . $request->pesan . ".\n\nTerima Kasih";
 
             $this->sendToNo($item->no_hp, $message);
             $item->status = 'decline';

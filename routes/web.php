@@ -42,6 +42,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/detail/{uuid}', [AdminBookingCT::class, 'detail'])->name('detail');
         Route::post('/accept', [AdminBookingCT::class, 'accept'])->name('accept');
         Route::post('/decline', [AdminBookingCT::class, 'decline'])->name('decline');
+        Route::post('/cancel', [AdminBookingCT::class, 'cancel'])->name('cancel');
     });
 
     Route::prefix('riwayat-booking')->name('riwayat.')->group(function () {
