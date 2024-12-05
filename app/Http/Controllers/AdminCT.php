@@ -12,4 +12,11 @@ class AdminCT extends Controller
             'title' => 'Sirara | Dashboard'
         ]);
     }
+
+    public function login(Request $request)
+    {
+        return view('admin/login/index', [
+            'title' => 'Sirara | Login'
+        ]);
+    }
 }

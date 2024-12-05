@@ -12,6 +12,10 @@ Route::get('/', function () {
     return redirect()->route('user.index');
 });
 
+Route::prefix('auth')->name('auth.')->group(function () {
+    Route::get('/login', [AdminCT::class, 'login'])->name('login');
+});
+
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('', [AdminCT::class, 'index'])->name('dashboard');
 
@@ -55,7 +59,7 @@ Route::prefix('/user')->name('user.')->group(function () {
     Route::get('/booking/{uuid}', [UserCT::class, 'booking'])->name('booking');
     Route::post('/booking/{uuid}', [UserCT::class, '_booking'])->name('booking');
     Route::get('/riwayat', [UserCT::class, 'riwayat'])->name('riwayat');
-    
+
     Route::get('/search', [UserCT::class, 'search'])->name('search');
     Route::post('/search', [UserCT::class, 'doSearch'])->name('doSearch');
 
