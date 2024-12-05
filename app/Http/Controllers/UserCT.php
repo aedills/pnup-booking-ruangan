@@ -206,6 +206,18 @@ class UserCT extends Controller
         }
     }
 
+    public function search(Request $request)
+    {
+        return view('user.search', [
+            'title' => 'Cari Data Booking'
+        ]);
+    }
+
+    public function doSearch(Request $request)
+    {
+        dd($request);
+    }
+
     // Ajax
     public function checkAvailability(Request $request)
     {
