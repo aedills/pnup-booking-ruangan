@@ -8,7 +8,7 @@
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{route('admin.riwayat.index')}}">Riwayat Booking</a></li>
+                <li class="breadcrumb-item">Daftar Booking</a></li>
                 <li class="breadcrumb-item active">Detail</li>
             </ol>
         </nav>
@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title">{{$page_title}}</h5>
-                            <a href="{{route('admin.riwayat.index')}}">
+                            <a href="{{route('admin.booking.list')}}">
                                 <button class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-back"></i> Kembali</button>
                             </a>
                         </div>
