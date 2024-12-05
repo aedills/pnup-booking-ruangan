@@ -12,7 +12,6 @@ $waktuTersedia = explode(',', $data->time_available);
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{route('user.index')}}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{route('user.index')}}">Dashboard</a></li>
                 <li class="breadcrumb-item active">Booking</li>
             </ol>
         </nav>
