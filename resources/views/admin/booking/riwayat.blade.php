@@ -42,7 +42,6 @@
                                         <td>pagi-siang</td>
                                         <td>10-12-2024</td>
                                         <td>
-                                            <a href="{{ route('admin.riwayat.detail') }}" class="btn btn-outline-info">Detail</a>
                                         </td>
                                     </tr>
                                 </tbody>
