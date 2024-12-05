@@ -51,11 +51,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::prefix('/user')->name('user.')->group(function () {
-    Route::get('/{date?}', [UserCT::class, 'index'])->name('index');
     Route::get('/list', [UserCT::class, 'list'])->name('list');
     Route::get('/booking/{uuid}', [UserCT::class, 'booking'])->name('booking');
     Route::post('/booking/{uuid}', [UserCT::class, '_booking'])->name('booking');
     Route::get('/riwayat', [UserCT::class, 'riwayat'])->name('riwayat');
+    
+    Route::get('/search', [UserCT::class, 'search'])->name('search');
+    Route::post('/search', [UserCT::class, 'doSearch'])->name('doSearch');
 
     Route::post('/checkAvailable', [UserCT::class, 'checkAvailability'])->name('checkAvailability');
+
+    Route::get('/{date?}', [UserCT::class, 'index'])->name('index');
 });
