@@ -54,6 +54,19 @@ class AdminBookingCT extends Controller
         }
     }
 
+    public function riwayat(Request $request)
+    {
+        Carbon::setLocale('id');
+        $date = Carbon::now()->format('Y-m-d');
+
+        $riwayat = MDataBooking::where('status', 'accept')->where('tanggal', '<=', $date)->with('ruang')->orderBy('tanggal', 'desc')->get();
+        return view('admin.booking.riwayat', [
+            'title' => 'Riwayat Booking | SIRARA',
+            'page_title' => 'Riwayat Booking',
+            'riwayat' => $riwayat
+        ]);
+    }
+
     public function accept(Request $request)
     {
         try {

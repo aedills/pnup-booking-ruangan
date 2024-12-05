@@ -43,6 +43,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/accept', [AdminBookingCT::class, 'accept'])->name('accept');
         Route::post('/decline', [AdminBookingCT::class, 'decline'])->name('decline');
         Route::post('/cancel', [AdminBookingCT::class, 'cancel'])->name('cancel');
+
+        Route::get('/riwayat', [AdminBookingCT::class, 'riwayat'])->name('riwayat');
     });
 
     Route::prefix('riwayat-booking')->name('riwayat.')->group(function () {
