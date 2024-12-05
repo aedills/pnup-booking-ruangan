@@ -99,7 +99,7 @@ class UserCT extends Controller
 
                 $booking->file = $newFileName;
 
-                $additionMessage = "\n\nBerkas Tercantum: ".url('/files/'.$newFileName);
+                $additionMessage = "\n\nBerkas Tercantum: " . url('/files/' . $newFileName);
             }
 
             $booking->save();
@@ -121,7 +121,7 @@ class UserCT extends Controller
                     break;
             }
 
-            $message = "*=== BOOKING BARU ===*\n*Kode: " . $code . "*\nNama: " . $request->nama . "\nNo. HP: " . $request->nomor_hp . "\nAgenda Rapat: " . $request->nama_rapat . "\n\nRuang: " . $ruang->ruang . "\nLokasi: " . $ruang->lokasi . " (Kampus " . $ruang->kampus . ")\nTanggal: " . $tanggal . "\nWaktu: " . $waktu . "\n\n*Pesan: " . $pesan . "*\n\nHarap Segera Melakukan Konfirmasi\nLink/Detail: " . route('admin.booking.detail', ['uuid' => Str::uuid()]).$additionMessage;
+            $message = "*=== BOOKING BARU ===*\n*Kode: " . $code . "*\nNama: " . $request->nama . "\nNo. HP: " . $request->nomor_hp . "\nAgenda Rapat: " . $request->nama_rapat . "\n\nRuang: " . $ruang->ruang . "\nLokasi: " . $ruang->lokasi . " (Kampus " . $ruang->kampus . ")\nTanggal: " . $tanggal . "\nWaktu: " . $waktu . "\n\n*Pesan: " . $pesan . "*\n\nHarap Segera Melakukan Konfirmasi\nLink/Detail: " . route('admin.booking.detail', ['uuid' => Str::uuid()]) . $additionMessage;
             $custMessage = "*=== INFORMASI BOOKING ===*\nInformasi booking Anda sedang diproses, silahkan tunggu konfirmasi dari pihak admin.\n\nKode Booking: " . $code . "\nNama: " . $request->nama . "\nAgenda Rapat: " . $request->nama_rapat . "\n\nRuang: " . $ruang->ruang . "\nLokasi: " . $ruang->lokasi . " (Kampus " . $ruang->kampus . ")\nTanggal: " . $tanggal . "\nWaktu: " . $waktu . "\n\nJika ingin melakukan pembatalan harap lakukan pada link berikut\nhttps://google.com/";
             // dd($custMessage);
             // dd($message);
@@ -211,7 +211,8 @@ class UserCT extends Controller
     public function search(Request $request)
     {
         return view('user.search', [
-            'title' => 'Cari Data Booking'
+            'title' => 'Cari Data Booking',
+            'kode_booking' => null
         ]);
     }
 
@@ -227,21 +228,17 @@ class UserCT extends Controller
                 $dataBooking->tanggal = Carbon::parse($dataBooking->tanggal)->locale('id')->translatedFormat('l, d-m-Y');
                 return view('user.search', [
                     'title' => 'Cari Data Booking',
-                    'success' => true,
-                    'dataBooking' => $dataBooking
+                    'dataBooking' => $dataBooking,
+                    'kode_booking' => $request->kode
                 ]);
             }
         } catch (ValidationException $e) {
-            return back()->with('error', 'Gagal: ' . $e->getMessage())->withInput();
+            return back()->with('error', 'Kode booking diperlukan saat pencarian');
         } catch (\Exception $err) {
             if ($err->getMessage() === "No query results for model [App\\Models\\MDataBooking].") {
                 return back()->with('error', 'Kode booking tidak ditemukan')->withInput();
             }
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong',
-                'error' => $err->getMessage()
-            ], 500);
+            return back()->with('error', 'Terjadi kesalahan ketika mencari data');
         }
     }
 
