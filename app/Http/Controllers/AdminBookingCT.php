@@ -31,7 +31,7 @@ class AdminBookingCT extends Controller
 
     public function detail(Request $request)
     {
-        $item = MDataBooking::where('uuid', $request->uuid)->firstOrFail();
+        $item = MDataBooking::where('uuid', $request->uuid)->with('ruang')->firstOrFail();
 
         $waktu = '';
         $waktuMap = [
