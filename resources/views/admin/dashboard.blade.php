@@ -13,7 +13,7 @@
         </nav>
     </div>
 
-    <h2>Testt Halaman</h2>
+    <h2>Dashboard (Masih dalam pengembangan)</h2>
 
 </main><!-- End #main -->
 

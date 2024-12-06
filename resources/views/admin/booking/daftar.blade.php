@@ -36,7 +36,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($pending as $pend)
+                                    @forelse ($pending as $pend)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $pend->kode }}</td>
@@ -71,7 +71,11 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center">Tidak ada Data</td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -97,7 +101,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($accept as $acc)
+                                    @forelse ($accept as $acc)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $acc->kode }}</td>
@@ -126,7 +130,11 @@
                                             <button type="button" class="btn btn-sm btn-outline-primary" onclick="cancelAcc('{{$acc->uuid}}')">Batal Konfirmasi</button>
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center">Tidak ada Data</td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -154,7 +162,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($decline as $dec)
+                                    @forelse ($decline as $dec)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $dec->kode }}</td>
@@ -184,7 +192,11 @@
                                             </a>
                                         </td>
                                     </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center">Tidak ada Data</td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

@@ -36,7 +36,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($riwayat as $list)
+                                    @forelse($riwayat as $list)
                                         <tr>
                                             <td>{{$loop->iteration}}</td>
                                             <td>{{$list->nama}}</td>
@@ -67,7 +67,11 @@
                                                 @endif
                                             </td>
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                    <tr>
+                                        <td colspan="7" class="text-center">Tidak ada Data</td>
+                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
