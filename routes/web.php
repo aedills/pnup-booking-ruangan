@@ -46,10 +46,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/detail/{uuid}', [AdminBookingCT::class, 'detail'])->name('detail');
         Route::post('/accept', [AdminBookingCT::class, 'accept'])->name('accept');
         Route::post('/decline', [AdminBookingCT::class, 'decline'])->name('decline');
+        Route::post('/cancel', [AdminBookingCT::class, 'cancel'])->name('cancel');
+
+        Route::get('/riwayat', [AdminBookingCT::class, 'riwayat'])->name('riwayat');
     });
 
     Route::prefix('riwayat-booking')->name('riwayat.')->group(function () {
-        Route::get('/', [RiwayatBooking::class, 'index'])->name('index');
+        // Route::get('/', [RiwayatBooking::class, 'index'])->name('index');
         // Route::get('/detail', [RiwayatBooking::class, 'detail'])->name('detail');
     });
 });

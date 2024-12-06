@@ -62,7 +62,7 @@
                                             @endswitch
                                         </td>
                                         <td>
-                                            <div class="d-flex justify-content-center align-item-center gap-1">
+                                            <div class="d-flex justify-content-start align-item-center gap-1">
                                                 <a href="{{route('admin.booking.detail', ['uuid' => $pend->uuid])}}">
                                                     <button type="button" class="btn btn-sm btn-outline-info">Detail</button>
                                                 </a>
@@ -96,7 +96,7 @@
                                         <th scope="col">Aksi</th>
                                     </tr>
                                 </thead>
-                                <tbody> 
+                                <tbody>
                                     @foreach ($accept as $acc)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
@@ -123,70 +123,12 @@
                                             @endswitch
                                         </td>
                                         <td>
-                                            <a href="{{route('admin.booking.detail', ['uuid' => $acc->uuid])}}">
-                                                <button type="button" class="btn btn-sm btn-outline-info">Detail</button>
-                                            </a>
+                                            <button type="button" class="btn btn-sm btn-outline-primary" onclick="cancelAcc('{{$acc->uuid}}')">Batal Konfirmasi</button>
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('#TolakModal').on('show.bs.modal', function(event) {
-                                            var button = $(event.relatedTarget);
-                                            var uuid = button.data('bs-uuid');
-                                            $(this).find('input[name="uuid"]').val(uuid);
-                                        });
-                                    });
-                                </script>
-                            </div>
-                        </div>
-
-                        <!-- Modal Terima-->
-                        <div class="modal fade" id="TerimaModal" tabindex="-1" aria-labelledby="TerimaModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="TerimaModalLabel">Konfirmasi Booking</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Apakah Anda ingin menerima booking ini?<br>Permintaan booking di waktu dan ruang yang sama akan ditolak. Anda masih dapat membatalkan konfirmasi booking ini nanti.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                        <button type="button" class="btn btn-success">Terima</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Modal Tolak-->
-                        <div class="modal fade" id="TolakModal" tabindex="-1" aria-labelledby="TolakModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="TolakModalLabel">Tolak Permintaan Booking?</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Permintaan booking yang ditolak tidak akan bisa dikembalikan.</p>
-                                        <form id="declineform" action="{{ route('admin.booking.decline')}}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="text" name="uuid" value="" hidden>
-                                            <div class="mb-3">
-                                                <textarea name="pesan" class="form-control" id="exampleTextarea" rows="3" placeholder="Pesan..."></textarea>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                        <button type="submit" class="btn btn-danger" form="declineform">Tolak</button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -218,8 +160,7 @@
                                         <td>{{ $dec->kode }}</td>
                                         <td>{{ $dec->nama }}</td>
                                         <td>{{ $dec->ruang->ruang }}</td>
-                                        <td>{{ \Carbon\Carbon::parse($dec->tanggal)->locale('id')->isoFormat('D MMMM YYYY') }}
-                                        </td>
+                                        <td>{{ \Carbon\Carbon::parse($dec->tanggal)->locale('id')->isoFormat('D MMMM YYYY') }}</td>
                                         <td>
                                             @switch($dec->kode_waktu)
                                             @case(1)
@@ -246,62 +187,6 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            <div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('#TolakModal').on('show.bs.modal', function(event) {
-                                            var button = $(event.relatedTarget);
-                                            var uuid = button.data('bs-uuid');
-                                            $(this).find('input[name="uuid"]').val(uuid);
-                                        });
-                                    });
-                                </script>
-                            </div>
-                        </div>
-
-                        <!-- Modal Terima-->
-                        <div class="modal fade" id="TerimaModal" tabindex="-1" aria-labelledby="TerimaModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="TerimaModalLabel">Konfirmasi Booking</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Apakah Anda ingin menerima booking ini?<br>Permintaan booking di waktu dan ruang yang sama akan ditolak. Anda masih dapat membatalkan konfirmasi booking ini nanti.</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                        <button type="button" class="btn btn-success">Terima</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Modal Tolak-->
-                        <div class="modal fade" id="TolakModal" tabindex="-1" aria-labelledby="TolakModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="TolakModalLabel">Tolak Permintaan Booking?</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Permintaan booking yang ditolak tidak akan bisa dikembalikan.</p>
-                                        <form id="declineform" action="{{ route('admin.booking.decline')}}" method="POST" enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="text" name="uuid" value="" hidden>
-                                            <div class="mb-3">
-                                                <textarea name="pesan" class="form-control" id="exampleTextarea" rows="3" placeholder="Pesan..."></textarea>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                                        <button type="submit" class="btn btn-danger" form="declineform">Tolak</button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -506,6 +391,113 @@
                 }
             });
 
+        }
+
+        // cancel
+        function cancelAcc(uuid) {
+            console.log(uuid);
+            Swal.fire({
+                title: 'Batalkan Konfirmasi Booking?',
+                text: 'Permintaan yang telah dibatalkan tidak akan bisa dikembalikan.',
+                icon: 'warning',
+                input: 'textarea',
+                inputPlaceholder: 'Pesan pembatalan',
+                showCancelButton: true,
+                confirmButtonText: 'Batalkan Booking',
+                cancelButtonText: 'Batal',
+                customClass: {
+                    confirmButton: 'btn btn-sm btn-outline-danger',
+                    cancelButton: 'btn btn-sm btn-outline-secondary'
+                },
+                allowOutsideClick: false,
+                didOpen: () => {
+                    const textarea = Swal.getInput();
+                    if (textarea) {
+                        textarea.setAttribute('rows', '3');
+                        textarea.style.height = 'auto';
+                        textarea.style.overflowY = 'auto';
+                    }
+                },
+                preConfirm: (reason) => {
+                    if (!reason) {
+                        Swal.showValidationMessage('Anda harus membarikan alasan pembatalan.');
+                    }
+                    return reason;
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let url = "{{route('admin.booking.cancel')}}";
+
+                    Swal.fire({
+                        title: 'Memproses...',
+                        text: 'Mohon tunggu.',
+                        icon: 'info',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                        willOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
+                    // decline request
+                    fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                uuid: uuid,
+                                pesan: result.value
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Show success message
+                                Swal.fire({
+                                    title: 'Berhasil!',
+                                    text: 'Permintaan berhasil ditolak.',
+                                    icon: 'success',
+                                    confirmButtonText: 'Ok',
+                                    customClass: {
+                                        confirmButton: 'btn btn-sm btn-outline-success',
+                                    },
+                                    timer: 4000,
+                                    allowOutsideClick: false
+                                }).then(() => {
+                                    location.reload();
+                                });
+
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 4000);
+                            } else {
+                                Swal.fire({
+                                    title: 'Gagal!',
+                                    text: 'Terjadi kesalahan saat memproses permintaan.',
+                                    icon: 'error',
+                                    confirmButtonText: 'Ok',
+                                    customClass: {
+                                        confirmButton: 'btn btn-sm btn-outline-danger',
+                                    }
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            // Handle fetch error
+                            Swal.fire({
+                                title: 'Gagal!',
+                                text: 'Terjadi kesalahan koneksi.',
+                                icon: 'error',
+                                confirmButtonText: 'Ok',
+                                customClass: {
+                                    confirmButton: 'btn btn-sm btn-outline-danger',
+                                }
+                            });
+                        });
+                }
+            });
         }
     </script>
 

@@ -8,7 +8,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link collapsed" href="{{route('user.search')}}">
+        <a class="nav-link {{ request()->routeIs('user.search') ? '' : 'collapsed' }}" href="{{route('user.search')}}">
             <i class="fa-solid fa-magnifying-glass"></i>
             <span>Cari Booking</span>
         </a>
