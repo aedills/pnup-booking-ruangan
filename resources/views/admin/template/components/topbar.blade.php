@@ -13,24 +13,15 @@
             <li class="nav-item dropdown pe-3">
 
                 <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                    <img src="" alt="" class="rounded-circle">
-                    <span class="d-none d-md-block dropdown-toggle ps-2">Nama</span>
+                    <img src="{{url('/res/assets/img/check.png')}}" alt="" class="rounded-circle">
+                    <span class="d-none d-md-block dropdown-toggle ps-2"></span>
                 </a>
 
                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                    <li class="dropdown-header">
-                        <h6>Nama</h6>
-                        <span>Keterangan</span>
-                    </li>
-
                     <li>
-                        <hr class="dropdown-divider">
-                    </li>
-
-                    <li>
-                        <a class="dropdown-item d-flex align-items-center" href="">
-                            <i class="bi bi-person"></i>
-                            <span>Profile</span>
+                        <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#passwordChangeModal">
+                            <i class="bi bi-key"></i>
+                            <span>Ganti Password</span>
                         </a>
                     </li>
 
@@ -39,9 +30,9 @@
                     </li>
 
                     <li>
-                        <a class="dropdown-item d-flex align-items-center" href="">
+                        <a class="dropdown-item d-flex align-items-center" href="{{route('auth.logout')}}">
                             <i class="bi bi-box-arrow-right"></i>
-                            <span>Sign Out</span>
+                            <span>Log Out</span>
                         </a>
                     </li>
 

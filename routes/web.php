@@ -13,9 +13,13 @@ Route::get('/', function () {
 
 Route::prefix('auth')->name('auth.')->group(function () {
     Route::get('/login', [AdminCT::class, 'login'])->name('login');
+    Route::post('/doLogin', [AdminCT::class, 'doLogin'])->name('doLogin');
+    Route::post('/changePass', [AdminCT::class, 'changePass'])->name('changePass');
+
+    Route::get('/logout', [AdminCT::class, 'logout'])->name('logout');
 });
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('is.admin')->group(function () {
     Route::get('', [AdminCT::class, 'index'])->name('dashboard');
 
     Route::prefix('data-ruangan')->name('data-ruangan.')->group(function () {

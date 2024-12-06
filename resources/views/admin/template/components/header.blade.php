@@ -7,17 +7,16 @@
 <meta content="" name="keywords">
 
 <!-- Favicons -->
-<link href="" rel="icon">
-<link href="" rel="apple-touch-icon">
-<link href="" rel="shortcut icon" type="image/x-icon">
+<link href="{{url('/res/assets/img/favicon.png')}}" rel="icon">
+<link href="{{url('/res/assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+<link href="{{url('/res/assets/img/favicon.png')}}" rel="shortcut icon" type="image/x-icon">
 
 <!-- Google Fonts -->
 <link href="https://fonts.gstatic.com" rel="preconnect">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i'" rel="stylesheet">
 
 <!-- Font Awesome -->
-<link rel="stylesheet" 
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 @livewireStyles
 @stack('styles')
