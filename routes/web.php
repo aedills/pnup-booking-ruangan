@@ -3,7 +3,6 @@
 use App\Http\Controllers\AdminBookingCT;
 use App\Http\Controllers\AdminCT;
 use App\Http\Controllers\DataGedung;
-use App\Http\Controllers\RiwayatBooking;
 use App\Http\Controllers\RuangRapatCT;
 use App\Http\Controllers\UserCT;
 use Illuminate\Support\Facades\Route;
@@ -49,11 +48,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/cancel', [AdminBookingCT::class, 'cancel'])->name('cancel');
 
         Route::get('/riwayat', [AdminBookingCT::class, 'riwayat'])->name('riwayat');
-    });
-
-    Route::prefix('riwayat-booking')->name('riwayat.')->group(function () {
-        // Route::get('/', [RiwayatBooking::class, 'index'])->name('index');
-        // Route::get('/detail', [RiwayatBooking::class, 'detail'])->name('detail');
     });
 });
 
