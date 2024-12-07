@@ -72,11 +72,11 @@
                             <div class="mt-2">
                                 <div class="card" style="border-radius: 4px;">
                                     <div class="row g-0">
-                                        @if (strpos($rooms->foto, ',') !== false)
                                         @php
                                             $fotoFoto = explode(',', $rooms->foto);
                                             $waktuTersedia = explode(',', $rooms->time_available)
                                         @endphp
+                                        @if (strpos($rooms->foto, ',') !== false)
                                         <div class="col-md-4 p-3">
                                             <div id="roomCarousel{{$rooms->uuid}}" class="carousel slide" data-bs-ride="carousel">
                                                 <div class="carousel-inner">
