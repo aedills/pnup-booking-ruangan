@@ -16,8 +16,7 @@ class UserCT extends Controller
     {
         Carbon::setLocale('id');
 
-        $allRoom = MDataRuangRapat::with('gedung')->get();
-
+        
         if ($request->date == null) {
             $dateSet = Carbon::now()->format('d-m-Y');
             $day = Carbon::now()->translatedFormat('l');
@@ -26,6 +25,8 @@ class UserCT extends Controller
             $day = Carbon::parse($request->date)->translatedFormat('l');
         }
 
+        $allRoom = MDataRuangRapat::with('gedung')->where('day_available', 'LIKE', '%' . $day . '%')->get();
+        
         return view('user/dashboard', [
             'title' => 'SIRARA | Dashboard',
 
