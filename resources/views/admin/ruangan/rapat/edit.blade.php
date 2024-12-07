@@ -34,7 +34,7 @@
                             </a>
                         </div>
 
-                        <form action="{{route('admin.data-ruangan.rapat.update')}}" method="post" enctype="multipart/form-data" id="addForm">
+                        <form action="{{route('admin.data-ruangan.rapat.update')}}" method="post" enctype="multipart/form-data" id="editForm">
                             @csrf
                             <input type="text" name="id" id="id" value="{{$ruang->id}}" hidden>
                             <input type="text" name="uuid" id="uuid" value="{{$ruang->uuid}}" hidden>
@@ -186,7 +186,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="d-flex justify-content-end align-items-end">
-                            <button type="submit" form="addForm" class="btn btn-outline-primary btn-sm">Tambah</button>
+                            <button type="submit" form="editForm" class="btn btn-outline-primary btn-sm">Simpan</button>
                         </div>
                     </div>
                 </div>

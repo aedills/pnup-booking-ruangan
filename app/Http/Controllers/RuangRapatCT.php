@@ -148,10 +148,12 @@ class RuangRapatCT extends Controller
             $uploadedFileNames = [];
 
             try {
-                foreach ($request->foto as $f) {
-                    $newFileName = time() . '-' . Str::random(8) . '.' . $f->getClientOriginalExtension();
-                    $f->move(public_path('images'), $newFileName);
-                    $uploadedFileNames[] = $newFileName;
+                if ($request->foto) {
+                    foreach ($request->foto as $f) {
+                        $newFileName = time() . '-' . Str::random(8) . '.' . $f->getClientOriginalExtension();
+                        $f->move(public_path('images'), $newFileName);
+                        $uploadedFileNames[] = $newFileName;
+                    }
                 }
             } catch (\Exception $errr) {
                 return back()->with('error', 'Terdapat kesalahan ketika menggunggah foto')->withInput();

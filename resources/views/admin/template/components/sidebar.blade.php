@@ -17,6 +17,13 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link {{ request()->routeIs('admin.data-ruangan.rapat*') ? '' : 'collapsed' }}" href="{{route('admin.data-ruangan.rapat.index')}}">
+            <i class="fa-solid fa-person-booth"></i>
+            <span>Data Ruangan</span>
+        </a>
+    </li>
+
+    <!-- <li class="nav-item">
         <a class="nav-link {{ request()->routeIs('admin.data-ruangan.rapat.index') ? '' : 'collapsed' }}" data-bs-target="#nav-ruangan" data-bs-toggle="collapse" href="#">
             <i class="fa-solid fa-person-booth"></i><span>Data Ruangan</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -32,7 +39,7 @@
                 </a>
             </li>
         </ul>
-    </li>
+    </li> -->
 
     <li class="nav-heading">Booking</li>
     
