@@ -92,7 +92,7 @@ class AdminBookingCT extends Controller
                     $waktu = $waktuMap[$allDecItem->kode_waktu] ?? 'Terdapat kesalahan dalam mengurai waktu';
                     $tanggal = Carbon::parse($allDecItem->tanggal)->translatedFormat('d F Y');
 
-                    $declineMessage = "*=== KONFIRMASI PENOLAKAN ===*\n\nMohon maaf permintaan booking Anda:\nKode Booking: " . $allDecItem->kode . "\nNama: " . $allDecItem->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $allDecItem->agenda_rapat . "\nRuang: " . $allDecItem->ruang->ruang . "\nLokasi: " . $allDecItem->ruang->lokasi . "\n\n*Tidak dapat kami penuhi dengan alasan ruangan telah digunakan oleh pihak lain. Silahkan booking di waktu yang berbeda atau di ruangan lain*.\n\nTerima Kasih";
+                    $declineMessage = "*=== KONFIRMASI PENOLAKAN ===*\n\nMohon maaf permintaan booking Anda:\nKode Booking: " . $allDecItem->kode . "\nNama: " . $allDecItem->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $allDecItem->agenda_rapat . "\nRuang: " . $allDecItem->ruang->ruang . "\nLokasi: " . $allDecItem->ruang->lokasi . "\n\n*Tidak dapat kami penuhi dengan alasan ruangan telah digunakan oleh pihak lain. Silahkan booking di waktu yang berbeda atau di ruangan lain*.\n\n=== TERIMA KASIH ===";
 
                     $this->sendToNo($allDecItem->no_hp, $declineMessage);
                 }
@@ -105,7 +105,7 @@ class AdminBookingCT extends Controller
                 $waktu = $waktuMap[$decItem->kode_waktu] ?? 'Terdapat kesalahan dalam mengurai waktu';
                 $tanggal = Carbon::parse($decItem->tanggal)->translatedFormat('d F Y');
 
-                $declineMessage = "*=== KONFIRMASI PENOLAKAN ===*\n\nMohon maaf permintaan booking Anda:\nKode Booking: " . $decItem->kode . "\nNama: " . $decItem->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $decItem->agenda_rapat . "\nRuang: " . $decItem->ruang->ruang . "\nLokasi: " . $decItem->ruang->lokasi . "\n\n*Tidak dapat kami penuhi dengan alasan ruangan telah digunakan oleh pihak lain. Silahkan booking di waktu yang berbeda atau di ruangan lain*.\n\nTerima Kasih";
+                $declineMessage = "*=== KONFIRMASI PENOLAKAN ===*\n\nMohon maaf permintaan booking Anda:\nKode Booking: " . $decItem->kode . "\nNama: " . $decItem->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $decItem->agenda_rapat . "\nRuang: " . $decItem->ruang->ruang . "\nLokasi: " . $decItem->ruang->lokasi . "\n\n*Tidak dapat kami penuhi dengan alasan ruangan telah digunakan oleh pihak lain. Silahkan booking di waktu yang berbeda atau di ruangan lain*.\n\n=== TERIMA KASIH ===";
 
                 $this->sendToNo($decItem->no_hp, $declineMessage);
             }
@@ -118,7 +118,7 @@ class AdminBookingCT extends Controller
                 $waktu = $waktuMap[$additionDecItem->kode_waktu] ?? 'Terdapat kesalahan dalam mengurai waktu';
                 $tanggal = Carbon::parse($additionDecItem->tanggal)->translatedFormat('d F Y');
 
-                $declineMessage = "*=== KONFIRMASI PENOLAKAN ===*\n\nMohon maaf permintaan booking Anda:\nKode Booking: " . $additionDecItem->kode . "\nNama: " . $additionDecItem->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $additionDecItem->agenda_rapat . "\nRuang: " . $additionDecItem->ruang->ruang . "\nLokasi: " . $additionDecItem->ruang->lokasi . "\n\n*Tidak dapat kami penuhi dengan alasan ruangan telah digunakan oleh pihak lain. Silahkan booking di waktu yang berbeda atau di ruangan lain*.\n\nTerima Kasih";
+                $declineMessage = "*=== KONFIRMASI PENOLAKAN ===*\n\nMohon maaf permintaan booking Anda:\nKode Booking: " . $additionDecItem->kode . "\nNama: " . $additionDecItem->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $additionDecItem->agenda_rapat . "\nRuang: " . $additionDecItem->ruang->ruang . "\nLokasi: " . $additionDecItem->ruang->lokasi . "\n\n*Tidak dapat kami penuhi dengan alasan ruangan telah digunakan oleh pihak lain. Silahkan booking di waktu yang berbeda atau di ruangan lain*.\n\n=== TERIMA KASIH ===";
 
                 $this->sendToNo($additionDecItem->no_hp, $declineMessage);
             }
@@ -129,7 +129,7 @@ class AdminBookingCT extends Controller
             $waktu = $waktuMap[$item->kode_waktu] ?? 'Terdapat kesalahan dalam mengurai waktu';
             $tanggal = Carbon::parse($item->tanggal)->translatedFormat('d F Y');
 
-            $message = "*=== KONFIRMASI BOOKING ===*\n\n*Permintaan booking Anda telah dikonfirmasi*. Berikut detail booking Anda:\n\nKode Booking: " . $item->kode . "\nNama: " . $item->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $item->agenda_rapat . "\nRuangan: " . $item->ruang->ruang . "\nLokasi: " . $item->ruang->lokasi . "\n\n_Anda masih dapat melakukan pembatalan hingga batas min 4 jam sebelum waktu yang tertera pada booking._\n\nTerima Kasih";
+            $message = "*=== KONFIRMASI BOOKING ===*\n\n*Permintaan booking Anda telah dikonfirmasi*. Berikut detail booking Anda:\n\nKode Booking: " . $item->kode . "\nNama: " . $item->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $item->agenda_rapat . "\nRuangan: " . $item->ruang->ruang . "\nLokasi: " . $item->ruang->lokasi . "\n\n_Anda masih dapat melakukan pembatalan hingga batas min 4 jam sebelum waktu yang tertera pada booking._\n\n=== TERIMA KASIH ===";
 
             $this->sendToNo($item->no_hp, $message);
 
@@ -176,7 +176,7 @@ class AdminBookingCT extends Controller
             $waktu = $waktuMap[$item->kode_waktu] ?? 'Terdapat kesalahan dalam mengurai waktu';
             $tanggal = Carbon::parse($item->tanggal)->translatedFormat('d F Y');
 
-            $message = "*=== KONFIRMASI PENOLAKAN ===*\n\nMohon maaf permintaan booking Anda:\n\nKode Booking: " . $item->kode . "\nNama: " . $item->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $item->agenda_rapat . "\nRuang: " . $item->ruang->ruang . "\nLokasi: " . $item->ruang->lokasi . "\n\n*Tidak dapat kami penuhi dengan alasan " . $request->pesan . "*.\n\nTerima Kasih";
+            $message = "*=== KONFIRMASI PENOLAKAN ===*\n\nMohon maaf permintaan booking Anda:\n\nKode Booking: " . $item->kode . "\nNama: " . $item->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $item->agenda_rapat . "\nRuang: " . $item->ruang->ruang . "\nLokasi: " . $item->ruang->lokasi . "\n\n*Tidak dapat kami penuhi dengan alasan " . $request->pesan . "*.\n\n=== TERIMA KASIH ===";
 
             $this->sendToNo($item->no_hp, $message);
             $item->status = 'decline';
@@ -221,7 +221,7 @@ class AdminBookingCT extends Controller
             $waktu = $waktuMap[$item->kode_waktu] ?? 'Terdapat kesalahan dalam mengurai waktu';
             $tanggal = Carbon::parse($item->tanggal)->translatedFormat('d F Y');
 
-            $message = "*=== KONFIRMASI PEMBATALAN ===*\n\nMohon maaf, booking Anda:\n\nKode Booking: " . $item->kode . "\nNama: " . $item->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $item->agenda_rapat . "\nRuang: " . $item->ruang->ruang . "\nLokasi: " . $item->ruang->lokasi . "\n\n*Kami batalkan dengan alasan " . $request->pesan . "*.\n\nTerima Kasih";
+            $message = "*=== KONFIRMASI PEMBATALAN ===*\n\nMohon maaf, booking Anda:\n\nKode Booking: " . $item->kode . "\nNama: " . $item->nama . "\nWaktu: " . $waktu . "\nTanggal: " . $tanggal . "\n\nAgenda: " . $item->agenda_rapat . "\nRuang: " . $item->ruang->ruang . "\nLokasi: " . $item->ruang->lokasi . "\n\n*Kami batalkan dengan alasan " . $request->pesan . "*.\n\n=== TERIMA KASIH ===";
 
             $this->sendToNo($item->no_hp, $message);
             $item->status = 'decline';

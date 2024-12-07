@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Auth;
 use App\Models\MDataBooking;
 use App\Models\MDataRuangRapat;
 use Carbon\Carbon;
@@ -61,6 +62,14 @@ class UserCT extends Controller
                 'file' => 'file|max:10240'
             ]);
 
+            $number = $request->nomor_hp;
+            if (str_starts_with($number, '08')) {
+                $phoneNumber = preg_replace('/^0/', '62', $number);
+            } else {
+                $phoneNumber = $number;
+            }
+
+
             $code = Carbon::createFromFormat('d-m-Y', $request->tanggal_booking)->format('ymd');
             switch ($request->waktu) {
                 case '1':
@@ -86,7 +95,7 @@ class UserCT extends Controller
             $booking->uuid = $new_uuid;
             $booking->kode = $code;
             $booking->nama = $request->nama;
-            $booking->no_hp = $request->nomor_hp;
+            $booking->no_hp = $phoneNumber;
             $booking->agenda_rapat = $request->nama_rapat;
             $booking->tanggal = Carbon::createFromFormat('d-m-Y', $request->tanggal_booking)->format('Y-m-d');
             $booking->uuid_ruang = $request->uuid;
@@ -123,13 +132,14 @@ class UserCT extends Controller
                     break;
             }
 
-            $message = "*=== BOOKING BARU ===*\n*Kode: " . $code . "*\nNama: " . $request->nama . "\nNo. HP: " . $request->nomor_hp . "\nAgenda Rapat: " . $request->nama_rapat . "\n\nRuang: " . $ruang->ruang . "\nLokasi: " . $ruang->lokasi . " (Kampus " . $ruang->kampus . ")\nTanggal: " . $tanggal . "\nWaktu: " . $waktu . "\n\n*Pesan: " . $pesan . "*\n\nHarap Segera Melakukan Konfirmasi\nLink/Detail: " . route('admin.booking.detail', ['uuid' => $new_uuid]) . $additionMessage;
-            $custMessage = "*=== INFORMASI BOOKING ===*\nInformasi booking Anda sedang diproses, silahkan tunggu konfirmasi dari pihak admin.\n\nKode Booking: " . $code . "\nNama: " . $request->nama . "\nAgenda Rapat: " . $request->nama_rapat . "\n\nRuang: " . $ruang->ruang . "\nLokasi: " . $ruang->lokasi . " (Kampus " . $ruang->kampus . ")\nTanggal: " . $tanggal . "\nWaktu: " . $waktu . "\n\nJika ingin melakukan pembatalan harap lakukan pada link berikut\n".route('user.search');
+            $message = "*=== BOOKING BARU ===*\n\n*Kode: " . $code . "*\nNama: " . $request->nama . "\nNo. HP: " . $phoneNumber . "\nAgenda Rapat: " . $request->nama_rapat . "\n\nRuang: " . $ruang->ruang . "\nLokasi: " . $ruang->lokasi . " (Kampus " . $ruang->kampus . ")\nTanggal: " . $tanggal . "\nWaktu: " . $waktu . "\n\n*Pesan: " . $pesan . "*\n\nHarap Segera Melakukan Konfirmasi\nLink/Detail: " . route('admin.booking.detail', ['uuid' => $new_uuid]) . $additionMessage;
+            $custMessage = "*=== INFORMASI BOOKING ===*\n\nInformasi booking Anda sedang diproses, silahkan tunggu konfirmasi dari pihak admin.\n\nKode Booking: " . $code . "\nNama: " . $request->nama . "\nAgenda Rapat: " . $request->nama_rapat . "\n\nRuang: " . $ruang->ruang . "\nLokasi: " . $ruang->lokasi . " (Kampus " . $ruang->kampus . ")\nTanggal: " . $tanggal . "\nWaktu: " . $waktu . "\n\nJika ingin melakukan pembatalan harap hubungi pihak rumah tangga.\n\n=== TERIMA KASIH ===";
             // dd($custMessage);
             // dd($message);
 
-            $this->sendToNumber($request->nomor_hp, $custMessage);
-            $this->sendToNumber(ENV('API_WA_ADMIN'), $message);
+            $admin = Auth::where('username', 'admin')->firstOrFail('number');
+            $this->sendToNumber($phoneNumber, $custMessage);
+            $this->sendToNumber($admin->number, $message);
             // $this->sendToGroup($message);
 
             return back()->with('success', 'Berhasil melakukan booking, silahkan tunggu konfirmasi dari pihak rumah tangga.');
@@ -137,7 +147,7 @@ class UserCT extends Controller
         } catch (ValidationException $e) {
             return back()->with('error', 'Terdapat kesalahan pada input form');
         } catch (\Exception $err) {
-            // dd($err);
+            dd($err);
             return back()->with('error', 'Terdapat kesalahan ketika melakukan proses booking');
         }
     }

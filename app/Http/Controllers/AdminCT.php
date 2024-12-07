@@ -107,6 +107,8 @@ class AdminCT extends Controller
 
             if (str_starts_with($number, '08')) {
                 $phoneNumber = preg_replace('/^0/', '62', $number);
+            } else {
+                $phoneNumber = $number;
             }
 
             $admin = Auth::find(session('id'));
