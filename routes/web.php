@@ -21,6 +21,7 @@ Route::prefix('auth')->name('auth.')->group(function () {
 
 Route::prefix('admin')->name('admin.')->middleware('is.admin')->group(function () {
     Route::get('', [AdminCT::class, 'index'])->name('dashboard');
+    Route::post('changeNumber', [AdminCT::class, 'changeNumber'])->name('changeNumber');
 
     Route::prefix('data-ruangan')->name('data-ruangan.')->group(function () {
         Route::prefix('rapat')->name('rapat.')->group(function () {

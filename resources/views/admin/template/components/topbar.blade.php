@@ -30,8 +30,19 @@
                     </li>
 
                     <li>
+                        <a class="dropdown-item d-flex align-items-center" href="#" data-bs-toggle="modal" data-bs-target="#numberChange">
+                            <i class="fa-brands fa-whatsapp"></i>
+                            <span>Kontak Admin</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+
+                    <li>
                         <a class="dropdown-item d-flex align-items-center" href="{{route('auth.logout')}}">
-                            <i class="bi bi-box-arrow-right"></i>
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
                             <span>Log Out</span>
                         </a>
                     </li>

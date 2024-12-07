@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class AdminCT extends Controller
@@ -45,20 +44,21 @@ class AdminCT extends Controller
                         'id' => $admin->id,
                         'uuid' => $admin->uuid,
                         'username' => $admin->username,
+                        'number' => $admin->number
                     ]);
 
 
                     return redirect()->route('admin.dashboard')->with('success', 'Berhasil Login');
                 } else {
-                    return back()->with('error', 'Password yang Anda masukkan salah. Silahkan coba lagi.')->withInput();
+                    return back()->with('error', 'Password yang Anda masukkan salah. Silahkan coba lagi.');
                 }
             } else {
-                return back()->with('error', 'User tidak ditemukan. Silahkan hubungi admin.')->withInput();
+                return back()->with('error', 'User tidak ditemukan. Silahkan hubungi admin.');
             }
         } catch (ValidationException) {
-            return back()->with('error', 'Terdapat kesalahan pada input form')->withInput();
+            return back()->with('error', 'Terdapat kesalahan pada input form');
         } catch (\Exception $err) {
-            return back()->with('error', 'Terdapat kesalahan ketika melakukan login')->withInput();
+            return back()->with('error', 'Terdapat kesalahan ketika melakukan login');
         }
     }
 
@@ -74,7 +74,7 @@ class AdminCT extends Controller
 
             if (Hash::check($request->password, $admin->password)) {
                 if ($request->password === $request->newPassword) {
-                    return back()->with('error', 'Password baru tidak boleh sama dengan password lama.')->withInput();
+                    return back()->with('error', 'Password baru tidak boleh sama dengan password lama.');
                 }
 
                 $admin->password = Hash::make($request->newPassword);
@@ -83,20 +83,71 @@ class AdminCT extends Controller
                 if ($status) {
                     return back()->with('success', 'Berhasil memperbarui password');
                 } else {
-                    return back()->with('error', 'Terdapat kesalahan ketika memperbarui password')->withInput();
+                    return back()->with('error', 'Terdapat kesalahan ketika memperbarui password');
                 }
             } else {
-                return back()->with('error', 'Password yang Anda masukkan salah! Silahkan coba lagi.')->withInput();
+                return back()->with('error', 'Password yang Anda masukkan salah! Silahkan coba lagi.');
             }
         } catch (ValidationException $e) {
-            dd($e);
-            return back()->with('error', 'Terdapat kesalahan pada input form')->withInput();
+            return back()->with('error', 'Terdapat kesalahan pada input form');
         } catch (\Exception $err) {
-            dd($err);
-            return back()->with('error', 'Terdapat kesalahan ketika melakukan update password')->withInput();
+            return back()->with('error', 'Terdapat kesalahan ketika melakukan update password');
         }
     }
 
+    public function changeNumber(Request $request)
+    {
+        try {
+            $request->validate([
+                'password' => 'required|string|max:255',
+                'newNumber' => 'required|string|max:14',
+            ]);
+
+            $number = $request->newNumber;
+
+            if (str_starts_with($number, '08')) {
+                $phoneNumber = preg_replace('/^0/', '62', $number);
+            }
+
+            $admin = Auth::find(session('id'));
+
+            if (Hash::check($request->password, $admin->password)) {
+                if ($phoneNumber == session('number')) {
+                    return back()->with('error', 'Nomor yang Anda masukkan sama dengan nomor lama.');
+                }
+
+
+                $admin->number = $phoneNumber;
+                $status = $admin->save();
+
+                $newAdmin = Auth::find(session('id'));
+                if ($newAdmin) {
+                    $request->session()->flush();
+                    $request->session()->regenerate();
+                    $request->session()->put([
+                        'id' => $newAdmin->id,
+                        'uuid' => $newAdmin->uuid,
+                        'username' => $newAdmin->username,
+                        'number' => $newAdmin->number
+                    ]);
+                } else {
+                    return back()->with('error', 'Terjadi kesalahan, harap coba lagi.');
+                }
+
+                if ($status) {
+                    return back()->with('success', 'Berhasil memperbarui nomor');
+                } else {
+                    return back()->with('error', 'Terdapat kesalahan ketika memperbarui nomor');
+                }
+            } else {
+                return back()->with('error', 'Password yang Anda masukkan salah! Silahkan coba lagi.');
+            }
+        } catch (ValidationException $e) {
+            return back()->with('error', 'Terdapat kesalahan pada input form');
+        } catch (\Exception $err) {
+            return back()->with('error', 'Terdapat kesalahan ketika melakukan update nomor');
+        }
+    }
 
     public function logout(Request $request)
     {

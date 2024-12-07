@@ -9,6 +9,6 @@ class Auth extends Model
     protected $table = 'data_admin';
     protected $primary_key = 'id';
     protected $fillable = [
-        'uuid', 'username', 'password'
+        'uuid', 'username', 'password', 'number'
     ];
 }
